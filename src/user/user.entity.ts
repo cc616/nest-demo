@@ -6,8 +6,8 @@ export class User extends Model<User> {
   account: string;
 
   @Column
-  password: string;
+  age: number;
 
   @Column
-  openId: string;
+  role: string;
 }

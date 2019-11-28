@@ -1,7 +1,7 @@
 import { Controller, Get, Req, Post, Body, Param, Res, HttpStatus } from '@nestjs/common';
 import { Request } from 'express';
 import { UserService } from './user.service';
-import { User } from './interfaces/user.interface';
+import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('user')

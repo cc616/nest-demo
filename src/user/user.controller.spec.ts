@@ -13,10 +13,4 @@ describe('UserController', () => {
 
     userController = app.get<UserController>(UserController);
   });
-
-  describe('root', () => {
-    it('should return "This action returns a #1 user"', () => {
-      expect(userController.findOne('1')).toBe('This action returns a #1 user');
-    });
-  });
 });
