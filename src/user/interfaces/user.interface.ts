@@ -1,4 +1,5 @@
 export interface User {
-  readonly name: string;
-  readonly age: number;
+  readonly account: string;
+  readonly password: string;
+  readonly openId: string;
 }
