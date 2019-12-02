@@ -44,7 +44,7 @@ create_table_user_sql="create table IF NOT EXISTS ${table_user} (
   id INT NOT NULL AUTO_INCREMENT,
   account VARCHAR(32) NOT NULL,
   age INT(4) NOT NULL,
-  role VARCHAR(32) DEFAULT NULL,
+  role VARCHAR(32) NOT NULL,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
@@ -61,7 +61,7 @@ fi
 
 # 插入数据
 echo "inset data to ${table_user}"
-inset_user_sql="insert into user (account, age) values ('lisi', 27)"
+inset_user_sql="insert into user (account, age, role) values ('admin', 27, 'ADMIN')"
 
 echo ${inset_user_sql} | ${mysql_cmd} ${dbname}
 

@@ -10,7 +10,7 @@ export const databaseProviders = [
         host: 'localhost',
         port: 3306,
         username: 'root',
-        password: 'LCCli@616',
+        password: 'password',
         database: 'user',
       });
       sequelize.addModels([User]);

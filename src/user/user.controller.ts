@@ -8,10 +8,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // @Post()
-  // async create(@Body() createUserDto: CreateUserDto) {
-  //   this.userService.create(createUserDto);
-  // }
+  @Post()
+  async create(@Body() createUserDto: CreateUserDto) {
+    await this.userService.create(createUserDto);
+  }
 
   @Get()
   async findAll(): Promise<User[]> {
@@ -19,7 +19,7 @@ export class UserController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): string {
-    return `This action returns a #${id} user`;
+  findOne(@Param('id') id: string): Promise<User> {
+    return this.userService.findOne(id);
   }
 }
