@@ -2,20 +2,20 @@ import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import {
   ApiOperation,
   ApiResponse,
-  ApiUseTags,
+  ApiTags,
 } from '@nestjs/swagger';
 import { UserService } from './user.service';
-import { User } from './user.entity';
+import { User } from './user.model';
 import { CreateUserDto } from './dto/create-user.dto';
 
-@ApiUseTags('user')
+@ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
   @ApiOperation({
-    title: 'Create user',
+    description: 'Create user',
   })
   @ApiResponse({
     status: 201,
@@ -27,20 +27,14 @@ export class UserController {
   }
 
   @Get()
-  @ApiOperation({
-    title: 'Find all user',
-  })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   async findAll(): Promise<User[]> {
     return this.userService.findAll();
   }
 
   @Get(':id')
-  @ApiOperation({
-    title: 'Find one user by user id',
-  })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
-  findOne(@Param('id') id: string): Promise<User> {
-    return this.userService.findOne(id);
+  findOneById(@Param('id') id: string): Promise<User> {
+    return this.userService.findOneById(id);
   }
 }

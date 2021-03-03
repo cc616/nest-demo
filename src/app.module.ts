@@ -1,17 +1,30 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { SequelizeModule } from '@nestjs/sequelize';
 import { UserModule } from './user/user.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
-import { UserController } from './user/user.controller';
+import { User } from './user/user.model';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UserModule],
+  imports: [
+    UserModule,
+    AuthModule,
+    SequelizeModule.forRoot({
+      dialect: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'root',
+      database: 'mysql_demo',
+      models: [User],
+    }),
+  ],
   controllers: [],
   providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(LoggerMiddleware)
-      .forRoutes(UserController);
+      .apply(LoggerMiddleware);
   }
 }

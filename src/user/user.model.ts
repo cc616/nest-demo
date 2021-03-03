@@ -18,7 +18,6 @@ export class User extends Model<User> {
     type: DataType.BIGINT,
     allowNull: false,
     autoIncrement: true,
-    unique: true,
     primaryKey: true,
   })
   public id: number;
@@ -27,18 +26,31 @@ export class User extends Model<User> {
     type: DataType.STRING,
     allowNull: false,
   })
-  account: string;
+  username: string;
 
   @Column({
-    allowNull: false,
+    type: DataType.STRING,
+    allowNull: true,
   })
-  age: number;
+  password: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  role: string;
+  address: string;
+
+  @Column({
+    type: DataType.BIGINT,
+    allowNull: false,
+  })
+  age: number;
+
+  @Column({
+    type: DataType.BIGINT,
+    allowNull: false,
+  })
+  sex: number;
 
   @CreatedAt public createdAt: Date;
 
