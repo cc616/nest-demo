@@ -1,5 +1,5 @@
 import { Controller, Post, UseGuards, Get, Request, Body } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiForbiddenResponse, ApiNotFoundResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiForbiddenResponse, ApiNotFoundResponse, ApiUnauthorizedResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { LocalAuthGuard } from './local-auth.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { AuthService } from './auth.service';
@@ -19,6 +19,11 @@ export class AuthController {
     return this.authService.login(req.user);
   }
 
+  @ApiOperation({ summary: 'user profile' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+  @ApiForbiddenResponse({ description: 'Forbidden' })
+  @ApiNotFoundResponse({ description: 'Not Found' })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get('/profile')
   getProfile(@Request() req) {

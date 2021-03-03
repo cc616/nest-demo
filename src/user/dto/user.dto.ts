@@ -1,6 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UserDto {
+  @ApiProperty({ example: 1 })
+  readonly id: number;
+
   @ApiProperty({ example: 'username' })
   readonly username: string;
 

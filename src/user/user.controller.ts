@@ -1,39 +1,60 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
 import {
   ApiOperation,
-  ApiResponse,
   ApiTags,
+  ApiUnauthorizedResponse,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiBearerAuth,
+  ApiOkResponse,
 } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { User } from './user.model';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UserDto } from './dto/user.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
   @ApiOperation({
-    description: 'Create user',
+    summary: 'create user',
   })
-  @ApiResponse({
-    status: 201,
-    description: 'The record has been successfully created.',
-  })
-  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+  @ApiForbiddenResponse({ description: 'Forbidden' })
+  @ApiNotFoundResponse({ description: 'Not Found' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     await this.userService.create(createUserDto);
   }
 
+  @ApiOperation({
+    summary: 'get all users',
+  })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+  @ApiForbiddenResponse({ description: 'Forbidden' })
+  @ApiNotFoundResponse({ description: 'Not Found' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get()
-  @ApiResponse({ status: 403, description: 'Forbidden.' })
   async findAll(): Promise<User[]> {
     return this.userService.findAll();
   }
 
+  @ApiOperation({
+    summary: 'get user by id',
+  })
+  @ApiOkResponse({ type: UserDto, description: 'OK' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+  @ApiForbiddenResponse({ description: 'Forbidden' })
+  @ApiNotFoundResponse({ description: 'Not Found' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
-  @ApiResponse({ status: 403, description: 'Forbidden.' })
   findOneById(@Param('id') id: string): Promise<User> {
     return this.userService.findOneById(id);
   }
