@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    expose:
+      - 3306
+    volumes:
+      - ./database/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    restart: unless-stopped
+  nest:
+    build: .
+    ports:
+      - 8081:3001
+    links:
+      - mysql:nest_demo_mysql
