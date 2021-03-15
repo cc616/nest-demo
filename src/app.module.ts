@@ -11,7 +11,7 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
     SequelizeModule.forRoot({
       dialect: 'mysql',
-      host: 'nest_demo_mysql',
+      host: 'localhost',
       port: 3306,
       username: 'root',
       password: 'root',

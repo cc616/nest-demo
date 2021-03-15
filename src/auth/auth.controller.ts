@@ -3,7 +3,7 @@ import { ApiTags, ApiOperation, ApiForbiddenResponse, ApiNotFoundResponse, ApiUn
 import { LocalAuthGuard } from './local-auth.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { AuthService } from './auth.service';
-import { LoginDto } from './dto/login.dto';
+import { LoginDto } from './dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -16,7 +16,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('/login')
   async login(@Body() _: LoginDto, @Request() req) {
-    return this.authService.login(req.user);
+    return this.authService.login(req.user.dataValues);
   }
 
   @ApiOperation({ summary: 'user profile' })

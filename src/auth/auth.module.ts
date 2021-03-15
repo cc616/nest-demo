@@ -11,7 +11,6 @@ import { AuthController } from './auth.controller';
 @Module({
   imports: [
     UserModule,
-    PassportModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: jwtConstants.secret,
